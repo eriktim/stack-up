@@ -6,11 +6,11 @@ set -e
 
 mountpoint -q $stackMount
 if [ "$?" -ne 0 ]; then
-    echo "[stack] not mounted"
+    echo "[stack] not mounted" >&2
     exit 1
 fi
 
-CMD="rsync -a"
+CMD="rsync -au"
 
 for d in $stackList; do
     if [ -e "$d" ]; then
@@ -20,7 +20,7 @@ for d in $stackList; do
         fi
         $CMD $d $dir/
     elif [ ! -z "$d" ]; then
-        echo "[stack] $d not found"
+        echo "[stack] $d not found" >&2
     fi
 done
 
